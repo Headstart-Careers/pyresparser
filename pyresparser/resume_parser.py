@@ -27,7 +27,7 @@ class ResumeParser(object):
             'email': None,
             'mobile_number': None,
             'skills': None,
-            'college_name': None,
+            'university': None,
             'degree': None,
             'designation': None,
             'experience': None,
@@ -67,6 +67,7 @@ class ResumeParser(object):
         #       )
         entities = utils.extract_entity_sections_grad(self.__text_raw)
 
+        uni = [item for item in entities['education'] if 'University' in item ]
         # extract name
         try:
             self.__details['name'] = cust_ent['Name'][0]
@@ -84,7 +85,7 @@ class ResumeParser(object):
 
         # extract college name
         try:
-            self.__details['college_name'] = entities['College Name']
+            self.__details['university'] = uni
         except KeyError:
             pass
 
