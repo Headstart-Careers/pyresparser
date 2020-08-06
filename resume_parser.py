@@ -9,7 +9,7 @@ from spacy.matcher import Matcher
 from . import utils
 
 
-# class ResumeParser(object):
+class ResumeParser(object):
 
     def __init__(
         self,
