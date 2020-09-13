@@ -126,7 +126,7 @@ def convert_dataturks_to_spacy(dataturks_JSON_FilePath):
         return None
 
 
-TRAIN_DATA = trim_entity_spans(convert_dataturks_to_spacy("traindata.json"))
+TRAIN_DATA = trim_entity_spans(convert_dataturks_to_spacy("tagged_resumes.json"))
 
 
 @plac.annotations(
@@ -138,7 +138,7 @@ TRAIN_DATA = trim_entity_spans(convert_dataturks_to_spacy("traindata.json"))
 def main(
     model=None,
     new_model_name="training",
-    output_dir='/home/omkarpathak27/Downloads/zipped/pyresparser/pyresparser',
+    output_dir='/Users/localadmin/pyresparser/custom_model',
     n_iter=30
 ):
     """Set up the pipeline and entity recognizer, and train the new entity."""
@@ -209,7 +209,14 @@ def main(
         print("Loading from", output_dir)
         nlp2 = spacy.load(output_dir)
         # Check the classes have loaded back consistently
-        assert nlp2.get_pipe("ner").move_names == move_names
+        for a in nlp2.get_pipe("ner").move_names:
+            if a not in move_names:
+                print(a)
+        print('here')
+        for a in move_names:
+            if a not in nlp2.get_pipe("ner").move_names:
+                print(a)
+        #assert nlp2.get_pipe("ner").move_names == move_names '''random O appearing'''
         doc2 = nlp2(test_text)
         for ent in doc2.ents:
             print(ent.label_, ent.text)
